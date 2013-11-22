@@ -7,9 +7,12 @@ describe "Truncato" do
     it_should_truncate "no html text with longer length", :with => {:max_length => 13, :tail => '...'}, :source => "some text", :expected => "some text"
     it_should_truncate "no html text with shorter length", :with => {:max_length => 3}, :source => "some text", :expected => "som..."
     it_should_truncate "no html text with longer length", :with => {:max_length => 5}, :source => "some", :expected => "some"
+    it_should_truncate "no text when the max_length is equal to the string size", :with => {:max_length => 5}, :source => "12345", :expected => "12345"
+    it_should_truncate "no text when the max_length+1 is equal to the string size", :with => {:max_length => 6}, :source => "12345", :expected => "12345"
   end
 
   describe "html tags structure" do
+    it_should_truncate "no text when the max_length is equal to the string size", :with => {:max_length => 12}, :source => "<p>12345</p>", :expected => "<p>12345</p>"
     it_should_truncate "html text with a tag (counting tags)", :with => {:max_length => 4}, :source => "<p>some text</p>", :expected => "<p>s...</p>"
 
     it_should_truncate "html text with a tag (not counting tags)", :with => {:max_length => 4, :count_tags => false}, :source => "<p>some text</p>", :expected => "<p>some...</p>"
